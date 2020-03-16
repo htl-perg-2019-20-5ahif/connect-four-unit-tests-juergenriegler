@@ -65,5 +65,25 @@ namespace ConnectFour.Tests
 
         }
 
+
+        [Fact]
+        public void HorizontalWin()
+        {
+            var board = new Board();
+            
+            // no win
+            for (byte column = 0; column < 3; column++)
+            {
+                // execute twice so that a horizontal line can be built, otherwise there would be player 1, 2, 1, 2, ...
+                board.AddStone(column);
+                board.AddStone(column);
+            }
+            Assert.False(board.HorizontalWin());
+
+            // now: win
+            board.AddStone(3);
+            Assert.True(board.HorizontalWin());
+        }
+
     }
 }
