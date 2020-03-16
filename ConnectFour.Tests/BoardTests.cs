@@ -40,5 +40,30 @@ namespace ConnectFour.Tests
             Assert.Throws<InvalidOperationException>(() => b.AddStone(0));
             Assert.Equal(oldPlayer, b.Player);
         }
+
+
+        [Fact]
+        public void BoardFull()
+        {
+            var board = new Board();
+
+            for (byte column = 0; column < 7; column++)
+            {
+                for (byte row = 0; row < 6; row++)
+                {
+                    // with this line: one last stone is left out for the board to not be full
+                    if (column == 6 && row == 5) break;
+
+                    board.AddStone(column);
+                }
+            }
+            Assert.False(board.IsBoardFull());
+
+            // the last stone is not added
+            board.AddStone(6);
+            Assert.True(board.IsBoardFull());
+
+        }
+
     }
 }

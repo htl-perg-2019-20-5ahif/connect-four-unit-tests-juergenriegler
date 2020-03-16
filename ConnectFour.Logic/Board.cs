@@ -32,5 +32,27 @@ namespace ConnectFour.Logic
 
             throw new InvalidOperationException("Column is full");
         }
+
+        public bool IsGameOver()
+        {
+            // first: won?
+            // if not: is board full
+            // not the other way around!
+            
+            return false;
+        }
+
+        public bool IsBoardFull()
+        {
+            for (int column = 0; column < 7; column++)
+            {
+                if (GameBoard[column,5] == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }
