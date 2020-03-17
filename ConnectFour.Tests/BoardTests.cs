@@ -85,5 +85,67 @@ namespace ConnectFour.Tests
             Assert.True(board.HorizontalWin());
         }
 
+        [Fact]
+        public void VerticalWin()
+        {
+            var board = new Board();
+
+            // no win
+            for (byte row = 0; row < 3; row++)
+            {
+                // execute twice so that a vertical line can be built, otherwise there would be player 1, 2, 1, 2, ...
+                board.AddStone(0);
+                board.AddStone(1);
+            }
+            Assert.False(board.VerticalWin());
+
+            // now: win
+            board.AddStone(0);
+            Assert.True(board.VerticalWin());
+        }
+
+        [Fact]
+        public void TestDiagonal()
+        {
+            var board = new Board();
+            board.AddStone(1); // player 1 1x
+            board.AddStone(2); // player 2
+            board.AddStone(2); // player 1 2x
+            board.AddStone(3); // player 2
+            board.AddStone(4); // player 1
+            board.AddStone(3); // player 2
+            board.AddStone(3); // player 1 3x
+            board.AddStone(4); // player 2
+            board.AddStone(4); // player 1
+            board.AddStone(5); // player 2
+
+            // no win
+            Assert.False(board.DiagonalWin());
+
+            // now: win
+            board.AddStone(4); // player 1
+            Assert.True(board.DiagonalWin());
+        }
+
+        [Fact]
+        public void TestWon()
+        {
+            var board = new Board();
+
+            // no win
+            for (byte row = 0; row < 3; row++)
+            {
+                // execute twice so that a vertical line can be built, otherwise there would be player 1, 2, 1, 2, ...
+                board.AddStone(0);
+                board.AddStone(1);
+            }
+            Assert.False(board.IsGameWon().Item1);
+
+            // now: win
+            board.AddStone(0);
+            Assert.True(board.IsGameWon().Item1);
+            Assert.True(board.IsGameWon().Item2 == Board.GameWon.Vertical);
+        }
+
     }
 }
