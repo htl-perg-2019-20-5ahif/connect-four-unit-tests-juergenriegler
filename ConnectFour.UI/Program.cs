@@ -47,7 +47,14 @@ namespace ConnectFour.UI
             Console.WriteLine(board.GetGameBoardTextualGraphic());
             var gameOverReason = board.IsGameOver().Item2;
             if (gameOverReason == Board.GameEnd.Tie) Console.WriteLine("Tie!");
-            if (gameOverReason == Board.GameEnd.PlayerWins) Console.WriteLine("You won!");
+            if (gameOverReason == Board.GameEnd.PlayerWins)
+            {
+                Console.Write("You won");
+                var gameWonReason = board.IsGameWon().Item2;
+                if (gameWonReason == Board.GameWon.Horizontal) Console.WriteLine(", horizontally!");
+                if (gameWonReason == Board.GameWon.Vertical) Console.WriteLine(", vertically!");
+                if (gameWonReason == Board.GameWon.Diagonal) Console.WriteLine(", diagonally!");
+            }
         }
 
     }
